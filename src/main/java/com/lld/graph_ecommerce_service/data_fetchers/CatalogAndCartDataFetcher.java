@@ -19,21 +19,6 @@ public class CatalogAndCartDataFetcher {
     @Autowired
     private CartService cartService;
 
-    // --- QUERIES ---
-
-    @DgsQuery
-    public Product viewProductCatalog(@InputArgument String id) {
-        return productService.getProductById(id);
-    }
-
-    @DgsQuery
-    public ProductConnection searchProducts(
-            @InputArgument ProductFilterInput filter,
-            @InputArgument Integer limit,
-            @InputArgument Integer offset) {
-        // Implementation for relay-style pagination and filtering
-        return productService.search(filter, limit, offset);
-    }
 
     // --- MUTATIONS ---
 
