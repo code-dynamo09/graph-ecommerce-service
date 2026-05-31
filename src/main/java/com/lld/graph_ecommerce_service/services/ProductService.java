@@ -1,6 +1,6 @@
 package com.lld.graph_ecommerce_service.services;
 
-import com.example.generated.types.*;
+import com.lld.graph_ecommerce_service.generated.types.*;
 import com.lld.graph_ecommerce_service.models.entities.ProductEntity;
 import com.lld.graph_ecommerce_service.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;

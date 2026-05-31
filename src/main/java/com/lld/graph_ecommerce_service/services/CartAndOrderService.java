@@ -2,7 +2,7 @@ package com.lld.graph_ecommerce_service.services;
 
 
 
-import com.example.generated.types.*;
+import com.lld.graph_ecommerce_service.generated.types.*;
 import com.lld.graph_ecommerce_service.models.entities.*;
 import com.lld.graph_ecommerce_service.models.entities.FulfillmentStatus;
 import com.lld.graph_ecommerce_service.repositories.CartRepository;

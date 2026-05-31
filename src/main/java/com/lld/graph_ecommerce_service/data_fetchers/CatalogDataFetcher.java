@@ -1,9 +1,9 @@
 package com.lld.graph_ecommerce_service.data_fetchers;
 
-import com.example.generated.types.Category;
-import com.example.generated.types.Product;
-import com.example.generated.types.ProductConnection;
-import com.example.generated.types.ProductFilterInput;
+import com.lld.graph_ecommerce_service.generated.types.Category;
+import com.lld.graph_ecommerce_service.generated.types.Product;
+import com.lld.graph_ecommerce_service.generated.types.ProductConnection;
+import com.lld.graph_ecommerce_service.generated.types.ProductFilterInput;
 import com.lld.graph_ecommerce_service.services.CatalogService;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsQuery;

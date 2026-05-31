@@ -1,7 +1,7 @@
 package com.lld.graph_ecommerce_service.data_fetchers;
 
-import com.example.generated.types.CreditCardPayment;
-import com.example.generated.types.WalletPayment;
+import com.lld.graph_ecommerce_service.generated.types.CreditCardPayment;
+import com.lld.graph_ecommerce_service.generated.types.WalletPayment;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsTypeResolver;
 

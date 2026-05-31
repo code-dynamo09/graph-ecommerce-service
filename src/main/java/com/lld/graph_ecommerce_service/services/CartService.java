@@ -1,7 +1,7 @@
 package com.lld.graph_ecommerce_service.services;
 
 
-import com.example.generated.types.*;
+import com.lld.graph_ecommerce_service.generated.types.*;
 import com.lld.graph_ecommerce_service.models.entities.CartEntity;
 import com.lld.graph_ecommerce_service.models.entities.CartItemEntity;
 import com.lld.graph_ecommerce_service.models.entities.OrderEntity;

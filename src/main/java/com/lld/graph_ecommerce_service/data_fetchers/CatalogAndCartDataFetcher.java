@@ -1,7 +1,7 @@
 package com.lld.graph_ecommerce_service.data_fetchers;
 
 
-import com.example.generated.types.*;
+import com.lld.graph_ecommerce_service.generated.types.*;
 import com.lld.graph_ecommerce_service.services.CartService;
 import com.lld.graph_ecommerce_service.services.ProductService;
 import com.netflix.graphql.dgs.DgsComponent;
