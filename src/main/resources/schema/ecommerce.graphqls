@@ -1,0 +1,213 @@
+type Query {
+    # Product Catalog Queries
+    viewProductCatalog(id: ID!): Product
+    searchProducts(filter: ProductFilterInput!, limit: Int, offset: Int): ProductConnection!
+    getAllCategories: [Category!]!
+
+    # Cart Queries
+    getCart(customerId: ID!): Cart
+
+    # Order Queries
+    getOrderDetails(orderId: ID!): Order
+    getCustomerOrderHistory(customerId: ID!, limit: Int, offset: Int): OrderConnection!
+}
+
+type Mutation {
+    # Catalog Management
+    addProductReview(input: ReviewInput!): Review!
+
+    # Cart Actions
+    addItemToCart(customerId: ID!, item: CartItemInput!): Cart!
+    clearCart(customerId: ID!): Boolean!
+
+    # Checkout & Fulfillment
+    processCheckout(customerId: ID!, paymentMethod: PaymentType!): Order!
+    updateFulfillmentStatus(orderId: ID!, status: FulfillmentStatus!): Order!
+}
+
+type Subscription {
+    monitorOrderDelivery(orderId: ID!): DeliveryTelemetry!
+}
+
+# --- Enums ---
+enum FulfillmentStatus {
+    PENDING_PAYMENT
+    AUTHORIZED
+    PROCESSING
+    SHIPPED
+    DELIVERED
+    CANCELLED
+}
+
+enum PaymentType {
+    CREDIT_CARD
+    DIGITAL_WALLET
+}
+
+enum LoyaltyTier {
+    STANDARD
+    GOLD
+    PLATINUM
+}
+
+# --- Interfaces & Polymorphic Types ---
+interface PaymentInstrument {
+    id: ID!
+    amount: Float!
+    transactionToken: String!
+}
+
+type CreditCardPayment implements PaymentInstrument {
+    id: ID!
+    amount: Float!
+    transactionToken: String!
+    cardBrand: String!
+    maskedPan: String!
+}
+
+type WalletPayment implements PaymentInstrument {
+    id: ID!
+    amount: Float!
+    transactionToken: String!
+    walletProvider: String!
+}
+
+# --- Pagination Types (Relay Specification) ---
+type ProductConnection {
+    edges: [ProductEdge!]!
+    pageInfo: PageInfo!
+}
+
+type ProductEdge {
+    cursor: String!
+    node: Product!
+}
+
+type OrderConnection {
+    edges: [OrderEdge!]!
+    pageInfo: PageInfo!
+}
+
+type OrderEdge {
+    cursor: String!
+    node: Order!
+}
+
+type PageInfo {
+    hasNextPage: Boolean!
+    totalCount: Int!
+}
+
+# --- Object Types ---
+type Category {
+    id: ID!
+    name: String!
+    slug: String!
+}
+
+type Product {
+    id: ID!
+    sku: String!
+    name: String!
+    description: String
+    price: Float!
+    category: Category!
+    inventory: InventoryDetails!
+    reviews: [Review!]!
+    averageRating: Float!
+}
+
+type InventoryDetails {
+    availableStock: Int!
+    warehouseLocation: String!
+    isBackorderAllowed: Boolean!
+}
+
+type Review {
+    id: ID!
+    rating: Int!
+    headline: String!
+    comment: String
+    authorName: String!
+    createdAt: String!
+}
+
+type Cart {
+    id: ID!
+    customerId: ID!
+    items: [CartItem!]!
+    cartSubtotal: Float!
+}
+
+type CartItem {
+    product: Product!
+    quantity: Int!
+}
+
+type CustomerProfile {
+    id: ID!
+    fullName: String!
+    email: String!
+    tier: LoyaltyTier!
+}
+
+type Address {
+    street: String!
+    city: String!
+    postalCode: String!
+    country: String!
+}
+
+type Order {
+    id: ID!
+    orderNumber: String!
+    status: FulfillmentStatus!
+    placedAt: String!
+    customer: CustomerProfile!
+    shippingAddress: Address!
+    items: [OrderLineItem!]!
+    financials: OrderFinancials!
+    paymentDetails: PaymentInstrument
+}
+
+type OrderLineItem {
+    id: ID!
+    product: Product!
+    quantity: Int!
+    priceAtPurchase: Float!
+}
+
+type OrderFinancials {
+    subTotal: Float!
+    tax: Float!
+    shippingFee: Float!
+    grandTotal: Float!
+}
+
+type DeliveryTelemetry {
+    orderId: ID!
+    currentLatitude: Float!
+    currentLongitude: Float!
+    estimatedMinutesToArrival: Int!
+}
+
+# --- Input Types ---
+input ProductFilterInput {
+    categoryId: ID
+    minPrice: Float
+    maxPrice: Float
+    inStockOnly: Boolean
+}
+
+input CartItemInput {
+    productId: ID!
+    quantity: Int!
+}
+
+input ReviewInput {
+    productId: ID!
+    authorName: String!
+    rating: Int!
+    headline: String!
+    comment: String
+}
