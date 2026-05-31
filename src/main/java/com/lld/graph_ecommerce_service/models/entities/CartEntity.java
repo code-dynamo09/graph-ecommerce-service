@@ -1,5 +1,4 @@
 package com.lld.graph_ecommerce_service.models.entities;
-=
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
