@@ -19,6 +19,10 @@ public class CatalogAndCartDataFetcher {
     @Autowired
     private CartService cartService;
 
+    @DgsQuery
+    public Cart getCart(@InputArgument String id) {
+        return cartService.getCart(id);
+    }
 
     // --- MUTATIONS ---
 

@@ -28,6 +28,11 @@ public class CartService {
     @Autowired
     private OrderRepository orderRepository;
 
+
+    public Cart getCart(String id) {
+        return cartRepository.findById(id).map(this::mapToGraphQLCart).orElse(null);
+    }
+
     /**
      * Adds an item to the user's cart. Creates a cart if one doesn't exist.
      */

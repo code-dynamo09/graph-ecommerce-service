@@ -24,3 +24,4 @@ INSERT INTO inventories (id, product_id, available_stock, warehouse_location, is
 -- 4. Insert Initial Reviews
 INSERT INTO reviews (id, product_id, rating, headline, comment, author_name, created_at) VALUES
     ('r1111111-e89b-12d3-a456-426614174000', 'p1111111-e89b-12d3-a456-426614174000', 5, 'Absolute Beast of a Machine!', 'The compilation speeds on this M3 Pro chip are unbelievable. Worth every single penny.', 'DevJane', NOW());
+

@@ -1,0 +1,110 @@
+
+query GetAllCategories {
+    getAllCategories {
+        id
+        name
+        slug
+    }
+}
+
+query ViewProduct($productId: ID!) {
+    viewProductCatalog(id: $productId) {
+        id
+        sku
+        name
+        price
+        averageRating
+        category {
+            name
+        }
+        inventory {
+            availableStock
+            warehouseLocation
+        }
+    }
+}
+
+#   {
+#       "productId": "123e4567-e89b-12d3-a456-426614174000"
+#   }
+
+query Search($filter: ProductFilterInput!, $limit: Int, $offset: Int) {
+    searchProducts(filter: $filter, limit: $limit, offset: $offset) {
+        pageInfo {
+            totalCount
+            hasNextPage
+        }
+        edges {
+            cursor
+            node {
+                id
+                name
+                price
+            }
+        }
+    }
+}
+
+
+#{
+#    "filter": {
+#    "minPrice": 10.0,
+#    "maxPrice": 500.0,
+#    "inStockOnly": true
+#    },
+#    "limit": 5,
+#    "offset": 0
+#}
+
+mutation AddToCart($customerId: ID!, $itemInput: CartItemInput!) {
+    addItemToCart(customerId: $customerId, item: $itemInput) {
+        customerId
+        cartSubtotal
+        items {
+            quantity
+            product {
+                name
+                price
+            }
+        }
+    }
+}
+
+#{
+#    "customerId": "cust-9876",
+#    "itemInput": {
+#        "productId": "123e4567-e89b-12d3-a456-426614174000",
+#        "quantity": 2
+#    }
+#}
+
+
+mutation Checkout($customerId: ID!, $paymentType: PaymentType!) {
+    processCheckout(customerId: $customerId, paymentMethod: $paymentType) {
+        orderNumber
+        status
+        placedAt
+        financials {
+            subTotal
+            grandTotal
+        }
+        paymentDetails {
+            transactionToken
+            amount
+
+            # Use fragments to handle the Polymorphic Interface
+            ... on CreditCardPayment {
+                cardBrand
+                maskedPan
+            }
+            ... on WalletPayment {
+                walletProvider
+            }
+        }
+    }
+}
+
+#{
+#    "customerId": "cust-9876",
+#    "paymentType": "CREDIT_CARD"
+#}
